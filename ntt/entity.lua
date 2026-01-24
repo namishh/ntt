@@ -16,7 +16,7 @@ local INDEX_MASK = bit.lshift(1, INDEX_BITS) - 1  -- 0xFFFFF
 local GENERATION_MASK = 0xFFF             -- 12 bits
 --local MAX_GENERATION = 4096
 
-function EntityPool:new()
+function EntityPool.new()
     local pool = setmetatable({}, EntityPool)
     pool.generations = {}
     pool.alive = {}
