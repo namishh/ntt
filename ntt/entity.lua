@@ -51,7 +51,7 @@ function EntityPool:create()
 
   self.alive[index] = true
   self.count = self.count + 1
-  return bit.lshift(self.generations[index], INDEX_BITS) | index
+  return bit.bor(bit.lshift(self.generations[index], INDEX_BITS), index)
 end
 
 function EntityPool:getCount()
