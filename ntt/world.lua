@@ -61,3 +61,21 @@ function World:disable(entity,component)
 end
 
 return World
+
+function World:isEnabled(entity,component)
+  local store = self.components[component]
+
+  if store then
+    return store:isEnabled(entity)
+  end
+
+  return false
+end
+
+function World:getEntityCount()
+  return self.entities:getCount()
+end
+
+function World:iterateEntities()
+  return self.entities:iterate()
+end
