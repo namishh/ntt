@@ -1,5 +1,6 @@
 local EntityPool = require("ntt.entity")
 local ComponentStore = require("ntt.component")
+local Query = require("ntt.query")
 
 local World = {}
 World.__index = World
@@ -74,6 +75,10 @@ end
 
 function World:getEntityCount()
   return self.entities:getCount()
+end
+
+function World:query()
+  return Query.new(self)
 end
 
 function World:iterateEntities()
