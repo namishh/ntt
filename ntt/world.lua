@@ -146,4 +146,54 @@ function World:flush()
   end
 end
 
+function World:clearEntities()
+  for entity in self.entities:iterate() do
+    for _, store in pairs(self.components) do
+      store:remove(entity)
+    end
+    self.entities:destroy(entity)
+  end
+  if self.commands then
+    self.commands:clear()
+  end
+  if self.time then
+    self.time:reset()
+  end
+end
+
+function World:hasComponent(name)
+  return self.components[name] ~= nil
+end
+
+function World:set(entity, componentName, data)
+  local store = self.components[componentName]
+  if store then
+    store:add(entity, data)
+  end
+end
+
+function World:get(entity, componentName)
+  local store = self.components[componentName]
+  if store then
+    return store:get(entity)
+  end
+  return nil
+end
+
+function World:has(entity, componentName)
+  local store = self.components[componentName]
+  if store then
+    return store:has(entity)
+  end
+  return false
+end
+
+function World:remove(entity, componentName)
+  local store = self.components[componentName]
+  if store then
+    return store:remove(entity)
+  end
+  return false
+end
+
 return World
