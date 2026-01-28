@@ -32,16 +32,12 @@ testing:test("spawn() creates entity with builder pattern", function()
   local posStore = world:registerComponent("Position")
   local velStore = world:registerComponent("Velocity")
   local cmd = Commands.new(world)
-  
   local builder = cmd:spawn()
     :set("Position", { x = 10, y = 20 })
     :set("Velocity", { dx = 1, dy = 2 })
-  
   testing.assertNotNil(builder:getEntity())
   testing.assertEqual(1, #cmd.spawns)
-  
   cmd:execute()
-  
   local entity = builder:getEntity()
   testing.assertEqual(true, world.entities:isValid(entity))
   testing.assertEqual(10, posStore:get(entity).x)

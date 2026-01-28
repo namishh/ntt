@@ -1,6 +1,10 @@
 local EntityPool = require("ntt.entity")
 local ComponentStore = require("ntt.component")
 local Query = require("ntt.query")
+local Events = require("ntt.events")
+local Scheduler = require("ntt.scheduler")
+local Time = require("ntt.time")
+local Commands = require("ntt.commands")
 
 local World = {}
 World.__index = World
@@ -12,7 +16,10 @@ function World.new(options)
   world.entities = EntityPool:new()
   world.components = {}
   world.componentList = {}
-  world.commands = nil
+  world.commands = Commands.new(world)
+  world.events = Events.new(world)
+  world.scheduler = Scheduler.new(world)
+  world.time = Time.new(world)
   return world
 end
 
