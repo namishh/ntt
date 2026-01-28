@@ -93,6 +93,49 @@ function World:query()
   return Query.new(self)
 end
 
+function World:addSystem(system, phase, priority)
+  if self.scheduler then
+    self.scheduler:addSystem(system, phase, priority)
+  else
+    error("Scheduler not initialized. Set world.scheduler first.")
+  end
+end
+
+function World:removeSystem(system)
+  if self.scheduler then
+    self.scheduler:removeSystem(system)
+  end
+end
+
+function World:update(dt)
+  local scaledDt = dt
+  if self.time then
+    self.time:update(dt)
+    scaledDt = self.time:getDelta()
+  end
+  if self.scheduler then
+    self.scheduler:run("preUpdate", scaledDt)
+    self.scheduler:run("update", scaledDt)
+    self.scheduler:run("postUpdate", scaledDt)
+  end
+  self:flush()
+  if self.events then
+    self.events:clear()
+  end
+end
+
+function World:draw()
+  local dt = 0
+  if self.time then
+    dt = self.time:getDelta()
+  end
+
+  if self.scheduler then
+    self.scheduler:run("preDraw", dt)
+    self.scheduler:run("draw", dt)
+  end
+end
+
 function World:iterateEntities()
   return self.entities:iterate()
 end
