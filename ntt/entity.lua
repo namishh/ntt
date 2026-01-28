@@ -74,4 +74,17 @@ function EntityPool:isValid(ent)
   return self.generations[index] == generation and self.alive[index] == true
 end
 
+function EntityPool:destroy(ent)
+  if not self:isValid(ent) then
+    return false
+  end
+
+  local index = self:getIndex(ent)
+  self.alive[index] = false
+  self.generations[index] = self.generations[index] + 1
+  self.freeList[#self.freeList + 1] = index
+  self.count = self.count - 1
+  return true
+end
+
 return EntityPool

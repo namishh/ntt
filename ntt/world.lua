@@ -11,6 +11,7 @@ function World.new(options)
   local world = setmetatable({}, World)
   world.entities = EntityPool:new()
   world.components = {}
+  world.commands = nil
   return world
 end
 
@@ -34,15 +35,19 @@ function World:spawn()
 end
 
 function World:despawn(entt)
-  if not self.entities:isValid(entt) then
-    return false
-  end
+  if self.commands then
+    self.commands:despawn(entt)
+  else
+    if not self.entities:isValid(entt) then
+      return false
+    end
 
-  for _, store in ipairs(self.components) do
-    store:remove(entt)
-  end
+    for _, store in ipairs(self.components) do
+      store:remove(entt)
+    end
 
-  return self.entities:destroy(entt)
+    return self.entities:destroy(entt)
+  end
 end
 
 function World:enable(entity,component)
@@ -61,7 +66,6 @@ function World:disable(entity,component)
   end
 end
 
-return World
 
 function World:isEnabled(entity,component)
   local store = self.components[component]
@@ -84,3 +88,11 @@ end
 function World:iterateEntities()
   return self.entities:iterate()
 end
+
+function World:flush()
+  if self.commands then
+    self.commands:execute()
+  end
+end
+
+return World
