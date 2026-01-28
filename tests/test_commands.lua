@@ -1,30 +1,10 @@
 package.path = package.path .. ";../?.lua;../ntt/?.lua"
 local testing = require("t").new()
-local EntityPool = require("entity")
-local ComponentStore = require("component")
+local World = require("world")
 local Commands = require("commands")
 
-local function createMockWorld()
-  local world = {
-    entities = EntityPool:new(),
-    components = {}
-  }
-  
-  function world:registerComponent(name, options)
-    local store = ComponentStore:new(name, options)
-    self.components[name] = store
-    return store
-  end
-  
-  function world:spawn()
-    return self.entities:create()
-  end 
-  
-  return world
-end
-
 testing:test("Commands.new creates command buffer attached to world", function()
-  local world = createMockWorld()
+  local world = World.new()
   local cmd = Commands.new(world)
   testing.assertNotNil(cmd)
   testing.assertEqual(world, cmd.world)
@@ -34,7 +14,7 @@ testing:test("Commands.new creates command buffer attached to world", function()
 end)
 
 testing:test("hasPending() and clear() track command state", function()
-  local world = createMockWorld()
+  local world = World.new()
   world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -48,7 +28,7 @@ testing:test("hasPending() and clear() track command state", function()
 end)
 
 testing:test("spawn() creates entity with builder pattern", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local velStore = world:registerComponent("Velocity")
   local cmd = Commands.new(world)
@@ -69,7 +49,7 @@ testing:test("spawn() creates entity with builder pattern", function()
 end)
 
 testing:test("despawn() queues and executes entity removal", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -85,7 +65,7 @@ testing:test("despawn() queues and executes entity removal", function()
 end)
 
 testing:test("set() adds or updates components on existing entities", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -104,7 +84,7 @@ testing:test("set() adds or updates components on existing entities", function()
 end)
 
 testing:test("enable() and disable() toggle component state", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -121,7 +101,7 @@ testing:test("enable() and disable() toggle component state", function()
 end)
 
 testing:test("commands work with builder entity references", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -138,7 +118,7 @@ testing:test("commands work with builder entity references", function()
 end)
 
 testing:test("execute() skips invalid entities", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -151,7 +131,7 @@ testing:test("execute() skips invalid entities", function()
 end)
 
 testing:test("multiple spawns and despawns in single execute", function()
-  local world = createMockWorld()
+  local world = World.new()
   local posStore = world:registerComponent("Position")
   local cmd = Commands.new(world)
   
@@ -171,4 +151,3 @@ testing:test("multiple spawns and despawns in single execute", function()
 end)
 
 testing:report()
-

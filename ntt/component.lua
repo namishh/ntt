@@ -117,4 +117,16 @@ function ComponentStore:isEnabled(entity)
   return not self.disabled[index]
 end
 
+function ComponentStore:getCount()
+  return self.count
+end
+
+function ComponentStore:getDenseArray()
+  return self.dense, self.count
+end
+
+function ComponentStore:isDisabledByIndex(entityIndex)
+  return self.disabled[entityIndex] == true
+end
+
 return ComponentStore

@@ -11,6 +11,7 @@ function World.new(options)
   local world = setmetatable({}, World)
   world.entities = EntityPool:new()
   world.components = {}
+  world.componentList = {}
   world.commands = nil
   return world
 end
