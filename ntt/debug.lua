@@ -1,21 +1,13 @@
 local Debug = {}
 
-function Debug.listEntities(world)
-  local entities = {}
-  for entity in world.entities:iterate() do
-    entities[#entities + 1] = entity
-  end
-  return entities
-end
-
 function Debug.inspectEntity(world, entity)
   if not world.entities:isValid(entity) then
     return nil, "Entity is not valid"
   end
 
   local result = {
-    enttiy = entity,
-    index = world.entites,
+    entity = entity,
+    index = world.entities:getIndex(entity),
     generation = world.entities:getGeneration(entity),
     components = {}
   }
@@ -35,6 +27,10 @@ end
 function Debug.componentStats(world, name)
   local store = world.components[name]
   if not store then return nil end
+  return {
+    count = store:getCount(),
+    isTag = store.isTag or false
+  }
 end
 
 function Debug.allStats(world, name)
@@ -95,6 +91,14 @@ function Debug.printSummary(world)
       end
     end
   end
+end
+
+function Debug.listEntities(world)
+  local entities = {}
+  for entity in world.entities:iterate() do
+    entities[#entities + 1] = entity
+  end
+  return entities
 end
 
 function Debug.drawOverlay(world, x, y)

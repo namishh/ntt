@@ -108,15 +108,12 @@ end
 function Serialize.loadWorld(world, data, options)
   options = options or {}
 
-  if data.version ~= 1 then
+  if data.version and data.version ~= 1 then
     error("Unsupported save version: " .. tostring(data.version))
   end
 
   if options.clear then
-    for entity in world.entities:iterate() do
-      world.commands:despawn(entity)
-    end
-    world.commands:execute()
+    world:clearEntities()
   end
 
   local entities = {}

@@ -2,7 +2,7 @@ local Scene = {}
 Scene.__index = Scene
 
 function Scene.new(name)
-  local scene
+  local scene = setmetatable({}, Scene)
   scene.name = name
   scene.world = nil -- part of this module, can technically just be copy pasted into another project just for scene management
   scene.active = false

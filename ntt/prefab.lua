@@ -80,8 +80,8 @@ function PrefabRegistry.new()
   return registry
 end
 
-function PrefabRegistry:add(name, prefab)
-    if type(def.spawn) == "function" then
+function PrefabRegistry:add(name, def)
+    if type(def) == "table" and type(def.spawn) == "function" then
         self.prefabs[name] = def
     else
         self.prefabs[name] = Prefab.new(def)
@@ -116,13 +116,13 @@ end
 
 function PrefabRegistry:loadTable(t)
     for name, def in pairs(t) do
-        self:register(name, def)
+        self:add(name, def)
     end
     return self
 end
 
 
 return {
-    Prefab = Prefab
+    Prefab = Prefab,
     PrefabRegistry = PrefabRegistry
 }

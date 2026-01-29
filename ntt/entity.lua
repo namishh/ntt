@@ -87,4 +87,20 @@ function EntityPool:destroy(ent)
   return true
 end
 
+function EntityPool:iterate()
+  local i = -1
+  local maxIndex = self.nextIndex
+  
+  return function()
+    while i < maxIndex - 1 do
+      i = i + 1
+      if self.alive[i] then
+        local entity = bit.bor(bit.lshift(self.generations[i], INDEX_BITS), i)
+        return entity
+      end
+    end
+    return nil
+  end
+end
+
 return EntityPool
