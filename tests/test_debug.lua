@@ -1,7 +1,7 @@
-package.path = package.path .. ";../?.lua;../ntt/?.lua"
+package.path = package.path .. ";../?.lua;../dio/?.lua"
 local testing = require("t").new()
 local World = require("world")
-local Debug = require("ntt.debug")
+local Debug = require("dio.debug")
 
 testing:test("inspectEntity() returns entity info with components", function()
   local world = World.new()

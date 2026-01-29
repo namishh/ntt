@@ -1,4 +1,4 @@
-package.path = package.path .. ";../?.lua;../ntt/?.lua"
+package.path = package.path .. ";../?.lua;../dio/?.lua"
 local testing = require("t").new()
 local EntityPool = require("entity")
 local ComponentStore = require("component")

@@ -1,7 +1,7 @@
-package.path = package.path .. ";../?.lua;../ntt/?.lua"
+package.path = package.path .. ";../?.lua;../dio/?.lua"
 local testing = require("t").new()
 local World = require("world")
-local prefabModule = require("ntt.prefab")
+local prefabModule = require("dio.prefab")
 local Prefab = prefabModule.Prefab
 local PrefabRegistry = prefabModule.PrefabRegistry
 

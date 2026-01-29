@@ -1,10 +1,10 @@
-local EntityPool = require("ntt.entity")
-local ComponentStore = require("ntt.component")
-local Query = require("ntt.query")
-local Events = require("ntt.events")
-local Scheduler = require("ntt.scheduler")
-local Time = require("ntt.time")
-local Commands = require("ntt.commands")
+local EntityPool = require("dio.entity")
+local ComponentStore = require("dio.component")
+local Query = require("dio.query")
+local Events = require("dio.events")
+local Scheduler = require("dio.scheduler")
+local Time = require("dio.time")
+local Commands = require("dio.commands")
 
 local World = {}
 World.__index = World

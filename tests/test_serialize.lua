@@ -1,7 +1,7 @@
-package.path = package.path .. ";../?.lua;../ntt/?.lua"
+package.path = package.path .. ";../?.lua;../dio/?.lua"
 local testing = require("t").new()
 local World = require("world")
-local Serialize = require("ntt.serialize")
+local Serialize = require("dio.serialize")
 
 testing:test("saveWorld() serializes entities and components", function()
   local world = World.new()

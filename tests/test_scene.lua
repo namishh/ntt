@@ -1,6 +1,6 @@
-package.path = package.path .. ";../?.lua;../ntt/?.lua"
+package.path = package.path .. ";../?.lua;../dio/?.lua"
 local testing = require("t").new()
-local sceneModule = require("ntt.scene")
+local sceneModule = require("dio.scene")
 local Scene = sceneModule.Scene
 local SceneManager = sceneModule.SceneManager
 
