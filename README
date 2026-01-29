@@ -1,1 +1,3 @@
 jojo: game framework for love2d
+dio: ecs framework
+rohan: asset management, aseprite, spritesheet loader and animation player

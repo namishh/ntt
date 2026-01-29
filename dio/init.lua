@@ -1,4 +1,7 @@
-local dio = {}
+local dio = {
+  _VERSION = "1.0.0",
+  _DESCRIPTION = "dio: ecs framework for love2d",
+}
 
 dio.EntityPool = require("dio.entity")
 dio.ComponentStore = require("dio.component")
